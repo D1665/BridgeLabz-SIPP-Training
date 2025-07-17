@@ -1,0 +1,97 @@
+// 1. Singly Linked List: Student Record Management
+import java.util.*;
+
+class Student {
+    int rollNo;
+    String name;
+    int age;
+    String grade;
+    Student next;
+
+    Student(int rollNo, String name, int age, String grade) {
+        this.rollNo = rollNo;
+        this.name = name;
+        this.age = age;
+        this.grade = grade;
+        this.next = null;
+    }
+}
+
+class StudentList {
+    Student head;
+
+    void addAtBeginning(Student s) {
+        s.next = head;
+        head = s;
+    }
+
+    void addAtEnd(Student s) {
+        if (head == null) {
+            head = s;
+            return;
+        }
+        Student temp = head;
+        while (temp.next != null) temp = temp.next;
+        temp.next = s;
+    }
+
+    void addAtPosition(Student s, int pos) {
+        if (pos <= 1) {
+            addAtBeginning(s);
+            return;
+        }
+        Student temp = head;
+        for (int i = 1; temp != null && i < pos - 1; i++) temp = temp.next;
+        if (temp == null) {
+            System.out.println("Invalid position");
+            return;
+        }
+        s.next = temp.next;
+        temp.next = s;
+    }
+
+    void deleteByRoll(int rollNo) {
+        if (head == null) return;
+        if (head.rollNo == rollNo) {
+            head = head.next;
+            return;
+        }
+        Student temp = head;
+        while (temp.next != null && temp.next.rollNo != rollNo) temp = temp.next;
+        if (temp.next != null) temp.next = temp.next.next;
+        else System.out.println("Roll number not found");
+    }
+
+    void searchByRoll(int rollNo) {
+        Student temp = head;
+        while (temp != null) {
+            if (temp.rollNo == rollNo) {
+                System.out.println("Found: " + temp.name + ", Age: " + temp.age + ", Grade: " + temp.grade);
+                return;
+            }
+            temp = temp.next;
+        }
+        System.out.println("Student not found.");
+    }
+
+    void updateGrade(int rollNo, String newGrade) {
+        Student temp = head;
+        while (temp != null) {
+            if (temp.rollNo == rollNo) {
+                temp.grade = newGrade;
+                System.out.println("Grade updated.");
+                return;
+            }
+            temp = temp.next;
+        }
+        System.out.println("Roll number not found.");
+    }
+
+    void displayAll() {
+        Student temp = head;
+        while (temp != null) {
+            System.out.println("Roll: " + temp.rollNo + ", Name: " + temp.name + ", Age: " + temp.age + ", Grade: " + temp.grade);
+            temp = temp.next;
+        }
+    }
+}
