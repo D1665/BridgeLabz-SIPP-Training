@@ -1,0 +1,68 @@
+class Task {
+    int id;
+    String name;
+    int priority;
+    String dueDate;
+    Task next;
+
+    Task(int id, String name, int priority, String dueDate) {
+        this.id = id;
+        this.name = name;
+        this.priority = priority;
+        this.dueDate = dueDate;
+    }
+}
+
+class TaskScheduler {
+    Task head = null;
+
+    void addAtEnd(Task t) {
+        if (head == null) {
+            head = t;
+            t.next = head;
+            return;
+        }
+        Task temp = head;
+        while (temp.next != head) temp = temp.next;
+        temp.next = t;
+        t.next = head;
+    }
+
+    void removeById(int id) {
+        if (head == null) return;
+        Task curr = head, prev = null;
+        do {
+            if (curr.id == id) {
+                if (prev != null) prev.next = curr.next;
+                else {
+                    Task tail = head;
+                    while (tail.next != head) tail = tail.next;
+                    head = head.next;
+                    tail.next = head;
+                }
+                return;
+            }
+            prev = curr;
+            curr = curr.next;
+        } while (curr != head);
+    }
+
+    void displayTasks() {
+        if (head == null) return;
+        Task temp = head;
+        do {
+            System.out.println("ID: " + temp.id + ", Name: " + temp.name + ", Priority: " + temp.priority + ", Due: " + temp.dueDate);
+            temp = temp.next;
+        } while (temp != head);
+    }
+
+    void searchByPriority(int priority) {
+        if (head == null) return;
+        Task temp = head;
+        do {
+            if (temp.priority == priority)
+                System.out.println("Task: " + temp.name + ", Due: " + temp.dueDate);
+            temp = temp.next;
+        } while (temp != head);
+    }
+}
