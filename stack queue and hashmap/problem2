@@ -1,0 +1,13 @@
+class PairWithGivenSum {
+    public static boolean hasPairWithSum(int[] arr, int target) {
+        Set<Integer> set = new HashSet<>();
+        for (int num : arr) {
+            if (set.contains(target - num)) {
+                System.out.println("Pair: (" + num + ", " + (target - num) + ")");
+                return true;
+            }
+            set.add(num);
+        }
+        return false;
+    }
+}
