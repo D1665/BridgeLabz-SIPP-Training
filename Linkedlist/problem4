@@ -1,0 +1,92 @@
+class Item {
+    String name;
+    String id;
+    int quantity;
+    double price;
+    Item next;
+
+    Item(String name, String id, int quantity, double price) {
+        this.name = name;
+        this.id = id;
+        this.quantity = quantity;
+        this.price = price;
+    }
+}
+
+class Inventory {
+    Item head;
+
+    void addAtEnd(Item i) {
+        if (head == null) {
+            head = i;
+            return;
+        }
+        Item temp = head;
+        while (temp.next != null) temp = temp.next;
+        temp.next = i;
+    }
+
+    void removeById(String id) {
+        if (head == null) return;
+        if (head.id.equals(id)) {
+            head = head.next;
+            return;
+        }
+        Item temp = head;
+        while (temp.next != null && !temp.next.id.equals(id)) temp = temp.next;
+        if (temp.next != null) temp.next = temp.next.next;
+    }
+
+    void updateQuantity(String id, int qty) {
+        Item temp = head;
+        while (temp != null) {
+            if (temp.id.equals(id)) {
+                temp.quantity = qty;
+                return;
+            }
+            temp = temp.next;
+        }
+    }
+
+    void searchById(String id) {
+        Item temp = head;
+        while (temp != null) {
+            if (temp.id.equals(id)) {
+                System.out.println("Found: " + temp.name + ", Qty: " + temp.quantity + ", Price: " + temp.price);
+                return;
+            }
+            temp = temp.next;
+        }
+    }
+
+    void totalValue() {
+        double total = 0;
+        Item temp = head;
+        while (temp != null) {
+            total += temp.quantity * temp.price;
+            temp = temp.next;
+        }
+        System.out.println("Total Inventory Value: Rs. " + total);
+    }
+
+    void sortByPrice() {
+        for (Item i = head; i != null; i = i.next) {
+            for (Item j = i.next; j != null; j = j.next) {
+                if (i.price > j.price) {
+                    double t = i.price; i.price = j.price; j.price = t;
+                    int q = i.quantity; i.quantity = j.quantity; j.quantity = q;
+                    String tmpName = i.name; i.name = j.name; j.name = tmpName;
+                    String tmpId = i.id; i.id = j.id; j.id = tmpId;
+                }
+            }
+        }
+    }
+
+    void displayItems() {
+        Item temp = head;
+        while (temp != null) {
+            System.out.println(temp.name + " (" + temp.id + ") - Qty: " + temp.quantity + ", Price: Rs." + temp.price);
+            temp = temp.next;
+        }
+    }
+}
