@@ -1,0 +1,24 @@
+class CompareBufferBuilder {
+    public static void compare() {
+        int count = 1_000_000;
+        long start, end;
+
+        // StringBuffer
+        StringBuffer sb = new StringBuffer();
+        start = System.nanoTime();
+        for (int i = 0; i < count; i++) {
+            sb.append("hello");
+        }
+        end = System.nanoTime();
+        System.out.println("Time taken by StringBuffer: " + (end - start) + " ns");
+
+        // StringBuilder
+        StringBuilder sbd = new StringBuilder();
+        start = System.nanoTime();
+        for (int i = 0; i < count; i++) {
+            sbd.append("hello");
+        }
+        end = System.nanoTime();
+        System.out.println("Time taken by StringBuilder: " + (end - start) + " ns");
+    }
+}
