@@ -1,0 +1,8 @@
+class StringBufferConcat {
+    public static String concatenateStrings(String[] strings) {
+        StringBuffer sb = new StringBuffer();
+        for (String s : strings) {
+            sb.append(s);
+        }
+        return sb.toString();
+   
